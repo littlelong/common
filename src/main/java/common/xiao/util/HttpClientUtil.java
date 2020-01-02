@@ -26,28 +26,11 @@ import com.alibaba.fastjson.JSON;
 
 public class HttpClientUtil {
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("PARAM",
 				"{\"lon\":\"113.10906\",\"lat\":\"22.60421\",\"dateTime\":\"2017-02-05 08:00:00\",\"zoom\":\"8\",\"code\":\"440703001\"}");
-		// HttpClientUtil.doGet(
-		// "http://10.148.16.52:7012/server/airq/queryAirqDataByClick?PARAM={\"lon\":\"113.10906\",\"lat\":\"22.60421\",\"dateTime\":\"2017-02-05
-		// 08:00:00\",\"zoom\":\"8\",\"code\":\"440703001\"}");
-		// String doGet =
-		// HttpClientUtil.doGet("http://10.148.16.52:7012/server/airq/queryAirqDataByClick",
-		// param);
-		// System.out.println(doGet);
-
-		/*
-		 * Map<String, Object> param = new HashMap<String, Object>(); param.put("param",
-		 * "{\"name\":\"南石头\",\"params\":[\"\"]}"); param.put("Authorization",
-		 * "92uIr/qijCEBX/4ZuDQaFY5OXgBrQwTPbtVaaRNbfPLFrSQPDVLzXXZKHFJeTHLSeHn+6HU4HOiSK3cbbnQwAGw9Y8HCbJlceOWVkJvIv7nPsNI2r02SSubdakRlVhVvSa4vAhVao6dVmhxMRM8boQ=="
-		 * ); String doPostJson = HttpClientUtil.doPost(
-		 * "http://enav.ngscs.org/services/hydroMeteo/v1/getHydroMeteoByStation",
-		 * param);
-		 */
-
-	
 		String names="坭洲头 、舢舨洲 、南石头 、东江囗 、仙屋角 、担杆岛 、内伶仃 、四尺岩 、大九洲 、高栏港、台山、阳江 、水东 、麻斜岛 、徐闻 、放鸡岛 、东海岛 、湾仔、肇庆 、山狗吼";
 		String[] split = names.split("、");
 		for (String name : split) {
@@ -56,16 +39,13 @@ public class HttpClientUtil {
 			String doPostJson = HttpClientUtil.doPost("http://enav.ngscs.org/services/hydroMeteo/v1/getHydroMeteoByStation",
 					param2,
 					"92uIr/qijCEBX/4ZuDQaFY5OXgBrQwTPbtVaaRNbfPLFrSQPDVLzXXZKHFJeTHLSeHn+6HU4HOiSK3cbbnQwAGw9Y8HCbJlceOWVkJvIv7nPsNI2r02SSubdakRlVhVvSa4vAhVao6dVmhxMRM8boQ==");
-			Map parseObject = JSON.parseObject(doPostJson, Map.class);
+			Map<String, Object> parseObject = JSON.parseObject(doPostJson, Map.class);
 			try {
-				Map parseObject2 = JSON.parseObject(((List) (parseObject.get("data"))).get(0).toString(), Map.class);
+				Map<String, Object> parseObject2 = JSON
+						.parseObject(((List) (parseObject.get("data"))).get(0).toString(), Map.class);
 				System.out.println(parseObject2);
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
-
-			// String update="update hydrology_station_info set lat='"++"',lon='"+"' where
-			// station_name='"+name+"';";
 		}
 		
 	}

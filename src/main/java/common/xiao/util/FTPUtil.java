@@ -384,7 +384,6 @@ public class FTPUtil {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -676,7 +675,6 @@ public class FTPUtil {
 				});
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -742,10 +740,10 @@ public class FTPUtil {
 
 	public static void main(String[] args) throws IOException {
 		FTPUtil ftpUtil = new FTPUtil("10.148.16.51", 21, "user5", "G00gle.com");
-		boolean connect = ftpUtil.connect();
+		ftpUtil.connect();
 		InputStream retrieveFileStream2 = ftpUtil.getFile("440000-20191230-Disaster-hh-1.json");
 		String readJsonFile2 = ftpUtil.readJsonFile(retrieveFileStream2);
-		JSONObject jobj = JSONObject.parseObject(readJsonFile2);
+		JSONObject.parseObject(readJsonFile2);
 	}
 	
 }
