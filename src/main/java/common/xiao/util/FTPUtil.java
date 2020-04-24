@@ -698,7 +698,7 @@ public class FTPUtil {
 	 * @param fileName
 	 * @return
 	 */
-	public String readJsonFile(InputStream file) {
+	public static String readJsonFile(InputStream file) {
 		String jsonStr = "";
 		try {
 			Reader reader = new InputStreamReader(file, "gbk");
@@ -708,7 +708,7 @@ public class FTPUtil {
 				sb.append((char) ch);
 			}
 			reader.close();
-			complete();
+			// complete();
 			jsonStr = sb.toString();
 			return jsonStr;
 		} catch (Exception e) {
@@ -739,11 +739,21 @@ public class FTPUtil {
     }
 
 	public static void main(String[] args) throws IOException {
-		FTPUtil ftpUtil = new FTPUtil("10.148.16.51", 21, "user5", "G00gle.com");
-		ftpUtil.connect();
-		InputStream retrieveFileStream2 = ftpUtil.getFile("440000-20191230-Disaster-hh-1.json");
-		String readJsonFile2 = ftpUtil.readJsonFile(retrieveFileStream2);
-		JSONObject.parseObject(readJsonFile2);
+		// FTPUtil ftpUtil = new FTPUtil("10.148.16.51", 21, "user5", "G00gle.com");
+		// ftpUtil.connect();
+		// InputStream retrieveFileStream2 =
+		// ftpUtil.getFile("440000-20191230-Disaster-hh-1.json");
+
+		String readJsonFile2 = readJsonFile(
+				new FileInputStream(new File("C:\\Users\\86188\\Desktop\\440000-20200219-Disaster-hh-1.json")));
+		JSONObject parseObject = JSONObject.parseObject(readJsonFile2);
+		String string = parseObject.get("pgjson").toString();
+		String object = JSONObject.parseObject(string).get("features").toString();
+		String geometry = JSONObject.parseArray(object).get(0).toString();
+		String coordinates = JSONObject.parseObject(geometry).get("geometry").toString();
+		String convert2Wkt = CoordinateUtil.convert2Wkt("MULTIPOLYGON", JSONObject.parseObject(coordinates).get("coordinates").toString());
+		System.out.println(convert2Wkt);
+		// System.out.println(object);
 	}
 	
 }
